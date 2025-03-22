@@ -1,15 +1,64 @@
+const fs = require('fs');
 const http = require('http');
+
 
 
 const server = http.createServer((req, res) => {
     console.log(req.url, req.method);
     
-    // set header content type
+    // Set Header Content Type
     res.setHeader('Content-Type', 'text/html');
+    
+    // ROUTING
+    let path = './views/';
+    switch (req.url) {
+        case '/':
+            path += 'index.html';
+            res.statusCode = 200;
+            break;
+        case '/about':
+            path += 'about.html';
+            res.statusCode = 200;
+            break;
+            // HOW TO REDIRECT
+        case '/about-me':
+            res.statusCode = 301;
+            res.setHeader('Location', '/about');
+            res.end();
+            break;// Till Here
+
+            // ERROR HANDLING
+        default:
+            path += '404.html';
+            res.statusCode = 404;
+            break;
+    }
+    fs.readFile(path, (err, data) => {
+        if (err) {
+            console.log(err);
+            res.end();
+        } else {
+            res.end(data);
+        }
+    });
+
+// BASIC SERVER
+
     res.write('<head><link rel="stylesheet" href="#"></head>');
-    res.write('<p>Hello, world!</p>');
-    res.write('<p>Hello, again!</p>');
     res.end();
+
+    //  send an HTML File to the browser
+    fs.readFile('./views/index.html', (err, data) => {
+        if (err) {
+            console.log(err);
+            res.end();
+        } else {
+            // res.write(data);
+            res.end(data);
+        }
+    });
+
+
 });
 
 server.listen(3000, 'localhost', () => {

@@ -4,7 +4,20 @@ const http = require('http');
 
 
 const server = http.createServer((req, res) => {
-    console.log(req.url, req.method);
+    // console.log(req.url, req.method);
+
+    // lodash
+    const _ = require('lodash');
+    const num = _.random(0, 20);
+    console.log(num);
+
+    const greet = _.once(() => {
+        console.log('hello');
+    });
+    greet();
+    greet();      
+
+
     
     // Set Header Content Type
     res.setHeader('Content-Type', 'text/html');
@@ -44,19 +57,19 @@ const server = http.createServer((req, res) => {
 
 // BASIC SERVER
 
-    res.write('<head><link rel="stylesheet" href="#"></head>');
-    res.end();
+//     res.write('<head><link rel="stylesheet" href="#"></head>');
+//     res.end();
 
-    //  send an HTML File to the browser
-    fs.readFile('./views/index.html', (err, data) => {
-        if (err) {
-            console.log(err);
-            res.end();
-        } else {
-            // res.write(data);
-            res.end(data);
-        }
-    });
+//     //  send an HTML File to the browser
+//     fs.readFile('./views/index.html', (err, data) => {
+//         if (err) {
+//             console.log(err);
+//             res.end();
+//         } else {
+//             // res.write(data);
+//             res.end(data);
+//         }
+//     });
 
 
 });
@@ -64,5 +77,3 @@ const server = http.createServer((req, res) => {
 server.listen(3000, 'localhost', () => {
     console.log('listening for requests on port 3000');
 });
-
-

@@ -25,9 +25,16 @@ app.get('/contact', (req, res) => {
     res.sendFile('/views/contact.html', { root: __dirname });
 });
 
-app.get('/404', (req, res) => {
-    // res.send('<p>Contact Page</p>');
-    res.sendFile('/views/404.html', { root: __dirname });
+// redirects
+app.get('/about-us', (req, res)=>{
+    res.redirect('/about');
+});
+
+
+// 404 page
+app.use((req, res) => {
+    // res.sendFile('/views/404.html', { root: __dirname });
+    res.status(404).sendFile('/views/404.html', { root: __dirname });
 });
 
 

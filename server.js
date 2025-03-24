@@ -33,6 +33,10 @@ const server = http.createServer((req, res) => {
             path += 'about.html';
             res.statusCode = 200;
             break;
+        case '/contact':
+            path += 'contact.html';
+            res.statusCode = 200;
+            break;
             // HOW TO REDIRECT
         case '/about-me':
             res.statusCode = 301;

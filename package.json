@@ -1,0 +1,19 @@
+{
+  "name": "node.js-project_min",
+  "version": "1.0.0",
+  "description": "This repository contains all my **Node.js** small projects and practice code. It serves as a learning space where I implement different concepts as I progress through my Node.js journey.",
+  "main": "file.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "lodash": "^4.17.21"
+  }
+}

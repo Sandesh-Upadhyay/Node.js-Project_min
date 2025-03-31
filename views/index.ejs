@@ -2,13 +2,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blog</title>
+<title>Blog | <%= title %></title>   <!--<%= title %> EJS Code -->
 </head>
 <body>
-
+    <% const name = "Sandesh" %>
     <nav>
         <div class="site-title">
             <a href="/"><h1>Blog</h1></a>
+            <p><%= name %></p>            <!--very usefull  when you build dynamic website  -->
             <p>A page of the Blog</p>
         </div>
         <ul>
@@ -20,6 +21,16 @@
     <div class="blogs content">
         <h2>All Blogs</h2>
 
+<!-- EJS Template Code -->
+        <% if(blogs.length > 0) { %>
+            <% blogs.forEach(blog => { %>
+
+                <h3 class= "title"><%= blog.title %></h3>
+                <p class= "snippet"><%= blog.snippet %></p>
+                <% }) %>
+                <% } else {%>
+                    <p> There is no blog to display.....</p>
+                    <% }%>
     </div>
     
 </body>

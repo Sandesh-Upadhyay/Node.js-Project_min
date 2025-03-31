@@ -15,6 +15,22 @@ app.set('view engine', 'ejs');    // for EJS
 // listen for requst
 app.listen(3000);
 
+// middleware
+app.use((req, res, next) => {      //using next middleware
+    console.log('new request made');
+    console.log('host:', req.hostname);
+    console.log('path:', req.path);
+    console.log('method:',req.method);
+    next();                             //using next middleware
+});
+
+//using next middleware
+app.use((req, res, next) => {
+    console.log('in the next middleware');
+    next();
+});
+
+
 app.get('/', (req, res) => {
     
     const blogs = [

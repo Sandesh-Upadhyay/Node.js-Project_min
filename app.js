@@ -1,6 +1,6 @@
 const express = require('express');
 // const { Server } = require('http');
-// const morgan = require('morgan');
+const morgan = require('morgan');
 // const mongoose = require('mongoose');
 
 //express app  
@@ -16,20 +16,27 @@ app.set('view engine', 'ejs');    // for EJS
 app.listen(3000);
 
 // middleware
-app.use((req, res, next) => {      //using next middleware
-    console.log('new request made');
-    console.log('host:', req.hostname);
-    console.log('path:', req.path);
-    console.log('method:',req.method);
-    next();                             //using next middleware
-});
+// app.use((req, res, next) => {      //using next middleware
+//     console.log('new request made');
+//     console.log('host:', req.hostname);
+//     console.log('path:', req.path);
+//     console.log('method:',req.method);
+//     next();                             //using next middleware
+// });
 
 //using next middleware
-app.use((req, res, next) => {
-    console.log('in the next middleware');
-    next();
-});
+// app.use((req, res, next) => {
+//     console.log('in the next middleware');
+//     next();
+// });
 
+
+// middleware and statis files
+app.use(express.static('public'));
+
+
+// using morgan middleware
+app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
     

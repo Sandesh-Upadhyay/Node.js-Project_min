@@ -36,7 +36,7 @@ app.use(express.static('public'));
 
 
 // using morgan middleware
-app.use(morgan('dev'));
+app.use(morgan('tiny'));
 
 app.get('/', (req, res) => {
     

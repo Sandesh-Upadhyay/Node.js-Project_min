@@ -1,13 +1,20 @@
 const express = require('express');
-// const { Server } = require('http');
+const { Server } = require('http');
 const morgan = require('morgan');
 // const mongoose = require('mongoose');
+// const Blog = require('./models/blogs'); // Import the Blog model
+// const fs = require('fs');
 
 //express app  
 const app = express();
 
 // connect to mongodb
-const dbURI = 'mongodb+srv://sandesh:<db_test1234>@nodejspractice.8b3dra2.mongodb.net/?retryWrites=true&w=majority&appName=Nodejspractice';
+// const dbURI = 'mongodb+srv://sandesh:<db_test1234>@nodejspractice.8b3dra2.mongodb.net/nodejs?retryWrites=true&w=majority&appName=Nodejspractice';
+
+// mongoose.connect(dbURI, {})
+//     .then((result) => app.listen(3000))
+//     .catch((err) => console.log(err));
+
 
 // register view engine
 app.set('view engine', 'ejs');    // for EJS
@@ -27,7 +34,7 @@ app.listen(3000);
 //     next();                             //using next middleware
 // });
 
-//using next middleware
+// using next middleware
 // app.use((req, res, next) => {
 //     console.log('in the next middleware');
 //     next();
@@ -39,7 +46,28 @@ app.use(express.static('public'));
 
 
 // using morgan middleware
-app.use(morgan('tiny'));
+// app.use(morgan('tiny'));
+app.use(morgan('dev'));
+
+// mongoose and mongo sandbox routes
+// app.get('/add-blog', (req, res) => {
+//     const blog = new Blog({
+//         title: 'new blog',
+//         snippet: 'about my new blog',
+//         body: 'more about my new blog'
+//     });
+
+//     blog.save()
+//     .then((result) => {
+//         res.send(result);
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     });
+// });
+
+
+// routes
 
 app.get('/', (req, res) => {
     

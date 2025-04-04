@@ -1,7 +1,24 @@
 const fs = require('fs');
 const http = require('http');
+const { MongoClient } = require('mongodb');
 
+const uri = 'mongodb+srv://sandesh:<db_test1234>@nodejspractice.8b3dra2.mongodb.net/nodejs?retryWrites=true&w=majority&appName=Nodejspractice'; // Replace with your MongoDB connection string
+const client = new MongoClient(uri);
 
+async function connectToDatabase() {
+    try {
+        await client.connect();
+        console.log("Connected to MongoDB");
+        // Perform database operations here if needed
+    } catch (err) {
+        console.error("Failed to connect to MongoDB", err);
+    } finally {
+        // Uncomment the following line if you want to close the connection after operations
+        // await client.close();
+    }
+}
+
+connectToDatabase();
 
 const server = http.createServer((req, res) => {
     // console.log(req.url, req.method);

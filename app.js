@@ -1,7 +1,7 @@
 const express = require('express');
 const { Server } = require('http');
 const morgan = require('morgan');
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 // const Blog = require('./models/blogs'); // Import the Blog model
 // const fs = require('fs');
 
@@ -10,15 +10,14 @@ const app = express();
 
 // connect to mongodb
 // const dbURI = 'mongodb+srv://sandesh:<db_test1234>@nodejspractice.8b3dra2.mongodb.net/nodejs?retryWrites=true&w=majority&appName=Nodejspractice';
-
-// mongoose.connect(dbURI, {})
-//     .then((result) => app.listen(3000))
-//     .catch((err) => console.log(err));
-
+const dbURI = 'mongodb+srv://sandesh:test1234@nodejspractice.8b3dra2.mongodb.net/nodejs?retryWrites=true&w=majority&appName=Nodejspractice';
+mongoose.connect(dbURI, { })
+    .then((result) => console.log('connected to db'))
+    .catch((err) => console.log(err))
+//     // .then((result) => app.listen(3000))
 
 // register view engine
 app.set('view engine', 'ejs');    // for EJS
-
 
 
 

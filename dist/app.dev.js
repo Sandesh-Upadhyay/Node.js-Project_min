@@ -7,7 +7,9 @@ var _require = require('http'),
 
 var morgan = require('morgan');
 
-var mongoose = require('mongoose'); // const Blog = require('./models/blogs'); // Import the Blog model
+var mongoose = require('mongoose');
+
+var Blog = require('./models/blogs'); // Import the Blog model
 // const fs = require('fs');
 //express app  
 
@@ -17,16 +19,17 @@ var app = express(); // connect to mongodb
 
 var dbURI = 'mongodb+srv://sandesh:test1234@nodejspractice.8b3dra2.mongodb.net/nodejs?retryWrites=true&w=majority&appName=Nodejspractice';
 mongoose.connect(dbURI, {}).then(function (result) {
-  return console.log('connected to db');
+  return app.listen(3000);
 })["catch"](function (err) {
   return console.log(err);
-}); //     // .then((result) => app.listen(3000))
+}); // .then((result) => console.log('connected to db'))
+//     // .then((result) => app.listen(3000)) IP 106.219.233.244/32
 // register view engine
 
 app.set('view engine', 'ejs'); // for EJS
 // listen for requst
-
-app.listen(3000); // middleware
+// app.listen(3000);
+// middleware
 // app.use((req, res, next) => {      //using next middleware
 //     console.log('new request made');
 //     console.log('host:', req.hostname);
@@ -47,7 +50,7 @@ app.use(express["static"]('public')); // using morgan middleware
 app.use(morgan('dev')); // mongoose and mongo sandbox routes
 // app.get('/add-blog', (req, res) => {
 //     const blog = new Blog({
-//         title: 'new blog',
+//         title: 'new blog 2',
 //         snippet: 'about my new blog',
 //         body: 'more about my new blog'
 //     });
@@ -59,6 +62,24 @@ app.use(morgan('dev')); // mongoose and mongo sandbox routes
 //         console.log(err);
 //     });
 // });
+// app.get('/all-blogs', (req, res) =>{
+//     Blog.find()
+//     .then((result) => {
+//         res.send(result);  
+//     })
+//     .catch((err) =>{
+//         console.log(err);
+//     });
+// });
+// app.get('/single-blog', (req, res) => {
+//     Blog.findById('67f22682f6c93fe91bf74325')
+//     .then((result) => {
+//         res.send(result);
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     }); 
+// })
 // routes
 
 app.get('/', function (req, res) {
@@ -78,6 +99,10 @@ app.get('/', function (req, res) {
     title: "Home",
     blogs: blogs
   }); // for EJS
+}); //blogs routes
+
+app.get('/', function (req, res) {
+  res.redirect('/blogs'); // Redirect to the home page    
 });
 app.get('/about', function (req, res) {
   // res.send('<p>About Page</p>');
@@ -85,6 +110,21 @@ app.get('/about', function (req, res) {
   res.render('about', {
     title: "About"
   }); // for EJS
+}); // blogs routes
+
+app.get('/blogs', function (req, res) {
+  Blog.find().sort({
+    createdAt: -1
+  }) // Sort by createdAt in descending order
+  .then(function (result) {
+    // res.send(result);  
+    res.render('index', {
+      title: "All Blogs",
+      blogs: result
+    }); // for EJS
+  })["catch"](function (err) {
+    console.log(err);
+  });
 });
 app.get('/blogs/create', function (req, res) {
   res.render('create', {

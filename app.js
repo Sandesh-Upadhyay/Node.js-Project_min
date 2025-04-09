@@ -44,7 +44,7 @@ app.set('view engine', 'ejs');    // for EJS
 
 // middleware and statis files
 app.use(express.static('public'));
-
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies (form data)
 
 // using morgan middleware
 // app.use(morgan('tiny'));
@@ -123,6 +123,19 @@ app.get('/blogs', (req, res) => {
         console.log(err);
     });
 });
+app.post('/blogs', (req, res) => {
+    // console.log(req.body); Log the request body to the console
+    const blog = new Blog(req.body); // Create a new blog instance with the request body
+    blog.save()
+    .then((result) => {
+        res.redirect('/blogs'); // Redirect to the blogs page after saving
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+}
+);
+
 
 app.get('/blogs/create',(req, res) =>{
     res.render('create', {title:"Create a new blog"});   // for EJS

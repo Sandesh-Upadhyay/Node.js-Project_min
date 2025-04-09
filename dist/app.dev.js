@@ -44,7 +44,11 @@ app.set('view engine', 'ejs'); // for EJS
 // });
 // middleware and statis files
 
-app.use(express["static"]('public')); // using morgan middleware
+app.use(express["static"]('public'));
+app.use(express.urlencoded({
+  extended: true
+})); // Parse URL-encoded bodies (form data)
+// using morgan middleware
 // app.use(morgan('tiny'));
 
 app.use(morgan('dev')); // mongoose and mongo sandbox routes
@@ -122,6 +126,16 @@ app.get('/blogs', function (req, res) {
       title: "All Blogs",
       blogs: result
     }); // for EJS
+  })["catch"](function (err) {
+    console.log(err);
+  });
+});
+app.post('/blogs', function (req, res) {
+  // console.log(req.body); Log the request body to the console
+  var blog = new Blog(req.body); // Create a new blog instance with the request body
+
+  blog.save().then(function (result) {
+    res.redirect('/blogs'); // Redirect to the blogs page after saving
   })["catch"](function (err) {
     console.log(err);
   });

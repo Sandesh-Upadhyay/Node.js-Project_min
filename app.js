@@ -10,8 +10,8 @@ const app = express();
 
 // connect to mongodb
 // const dbURI = 'mongodb+srv://sandesh:<db_test1234>@nodejspractice.8b3dra2.mongodb.net/nodejs?retryWrites=true&w=majority&appName=Nodejspractice';
-const dbURI = 'mongodb+srv://sandesh:test1234@nodejspractice.8b3dra2.mongodb.net/nodejs?retryWrites=true&w=majority&appName=Nodejspractice';
-mongoose.connect(dbURI, { })
+const dbURI = 'mongodb+srv://Sandesh:<test1234>@nodejspractice.8b3dra2.mongodb.net/nodejs?retryWrites=true&w=majority&appName=Nodejspractice';
+mongoose.connect(dbURI, {})
 .then((result) => app.listen(3000))
 .catch((err) => console.log(err))
 
@@ -102,9 +102,9 @@ app.get('/', (req, res) => {
 });
 
 //blogs routes
-app.get('/', (req, res) => {
-    res.redirect('/blogs'); // Redirect to the home page    
-});  
+// app.get('/', (req, res) => {
+//     res.redirect('/blogs'); // Redirect to the home page    
+// });  
 
 app.get('/about', (req, res) => {
     // res.send('<p>About Page</p>');
@@ -126,6 +126,7 @@ app.get('/blogs', (req, res) => {
 app.post('/blogs', (req, res) => {
     // console.log(req.body); Log the request body to the console
     const blog = new Blog(req.body); // Create a new blog instance with the request body
+
     blog.save()
     .then((result) => {
         res.redirect('/blogs'); // Redirect to the blogs page after saving
@@ -133,8 +134,20 @@ app.post('/blogs', (req, res) => {
     .catch((err) => {
         console.log(err);
     });
-}
-);
+});
+
+app.get('/blogs/:id', (req, res) => {
+    const id = req.params.id; // Get the blog ID from the URL parameters
+    Blog.findById(id) // Find the blog by ID
+    .then((result) => {
+        // res.send(result);  
+        res.render('details', {title:"Blog Details", blog: result});  // for EJS
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(404).render('404', {title:"Blog not found"});  // for EJS
+    });
+});
 
 
 app.get('/blogs/create',(req, res) =>{

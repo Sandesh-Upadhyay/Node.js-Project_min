@@ -10,7 +10,7 @@ const app = express();
 
 // connect to mongodb
 // const dbURI = 'mongodb+srv://sandesh:<db_test1234>@nodejspractice.8b3dra2.mongodb.net/nodejs?retryWrites=true&w=majority&appName=Nodejspractice';
-const dbURI = 'mongodb+srv://Sandesh:<test1234>@nodejspractice.8b3dra2.mongodb.net/nodejs?retryWrites=true&w=majority&appName=Nodejspractice';
+const dbURI = 'mongodb+srv://Sandesh:test1234@nodejspractice.8b3dra2.mongodb.net/nodejs?retryWrites=true&w=majority&appName=Nodejspractice';
 mongoose.connect(dbURI, {})
 .then((result) => app.listen(3000))
 .catch((err) => console.log(err))
@@ -141,14 +141,24 @@ app.get('/blogs/:id', (req, res) => {
     Blog.findById(id) // Find the blog by ID
     .then((result) => {
         // res.send(result);  
-        res.render('details', {title:"Blog Details", blog: result});  // for EJS
+        res.render('details', {blog: result , title:"Blog Details"});  // for EJS
     })
     .catch((err) => {
         console.log(err);
         res.status(404).render('404', {title:"Blog not found"});  // for EJS
     });
 });
-
+// Delete Request
+app.delete('/blogs/:id', (req, res) => {
+    const id = req.params.id; // Get the blog ID from the URL parameters
+    Blog.findByIdAndDelete(id) // Find the blog by ID and delete it
+    .then((result) => {
+        res.json({ redirect: '/blogs' }); // Send a JSON response to redirect after deletion
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+});
 
 app.get('/blogs/create',(req, res) =>{
     res.render('create', {title:"Create a new blog"});   // for EJS

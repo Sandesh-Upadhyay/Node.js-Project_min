@@ -2,7 +2,7 @@ const fs = require('fs');
 const http = require('http');
 const { MongoClient } = require('mongodb');
 
-const uri = 'mongodb+srv://Sandesh:<test1234>@nodejspractice.8b3dra2.mongodb.net/nodejs?retryWrites=true&w=majority&appName=Nodejspractice';// Replace with your MongoDB connection string
+const uri = 'mongodb+srv://Sandesh:test1234@nodejspractice.8b3dra2.mongodb.net/nodejs?retryWrites=true&w=majority&appName=Nodejspractice';// Replace with your MongoDB connection string
 const client = new MongoClient(uri);
 
 async function connectToDatabase() {

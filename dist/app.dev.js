@@ -9,8 +9,7 @@ var morgan = require('morgan');
 
 var mongoose = require('mongoose');
 
-var Blog = require('./models/blogs'); // Import the Blog model
-// const fs = require('fs');
+var blogRoutes = require('./routes/blogRoutes'); // const fs = require('fs');
 //express app  
 
 
@@ -104,77 +103,75 @@ app.get('/', function (req, res) {
     blogs: blogs
   }); // for EJS
 }); //blogs routes
-// app.get('/', (req, res) => {
-//     res.redirect('/blogs'); // Redirect to the home page    
-// });  
 
+app.get('/', function (req, res) {
+  res.redirect('/blogs'); // Redirect to the home page    
+});
 app.get('/about', function (req, res) {
   // res.send('<p>About Page</p>');
   // res.sendFile('/views/about.html', { root: __dirname });
   res.render('about', {
     title: "About"
   }); // for EJS
-}); // blogs routes
-
-app.get('/blogs', function (req, res) {
-  Blog.find().sort({
-    createdAt: -1
-  }) // Sort by createdAt in descending order
-  .then(function (result) {
-    // res.send(result);  
-    res.render('index', {
-      title: "All Blogs",
-      blogs: result
-    }); // for EJS
-  })["catch"](function (err) {
-    console.log(err);
-  });
-});
-app.post('/blogs', function (req, res) {
-  // console.log(req.body); Log the request body to the console
-  var blog = new Blog(req.body); // Create a new blog instance with the request body
-
-  blog.save().then(function (result) {
-    res.redirect('/blogs'); // Redirect to the blogs page after saving
-  })["catch"](function (err) {
-    console.log(err);
-  });
-});
-app.get('/blogs/:id', function (req, res) {
-  var id = req.params.id; // Get the blog ID from the URL parameters
-
-  Blog.findById(id) // Find the blog by ID
-  .then(function (result) {
-    // res.send(result);  
-    res.render('details', {
-      blog: result,
-      title: "Blog Details"
-    }); // for EJS
-  })["catch"](function (err) {
-    console.log(err);
-    res.status(404).render('404', {
-      title: "Blog not found"
-    }); // for EJS
-  });
-}); // Delete Request
-
-app["delete"]('/blogs/:id', function (req, res) {
-  var id = req.params.id; // Get the blog ID from the URL parameters
-
-  Blog.findByIdAndDelete(id) // Find the blog by ID and delete it
-  .then(function (result) {
-    res.json({
-      redirect: '/blogs'
-    }); // Send a JSON response to redirect after deletion
-  })["catch"](function (err) {
-    console.log(err);
-  });
-});
-app.get('/blogs/create', function (req, res) {
-  res.render('create', {
-    title: "Create a new blog"
-  }); // for EJS
 }); // app.get('/contact', (req, res) => {
+// res.send('<p>Contact Page</p>');
+// res.sendFile('/views/contact.html', { root: __dirname });
+// });
+// redirects
+// app.get('/about-us', (req, res)=>{
+//     res.redirect('/about');
+// });
+// // blogs routes
+
+app.use("/blogs", blogRoutes); // Use the blog routes
+// app.get('/blogs', (req, res) => {
+//     Blog.find().sort({createdAt: -1}) // Sort by createdAt in descending order
+//     .then((result) => {
+//         // res.send(result);  
+//         res.render('index', {title:"All Blogs", blogs: result});  // for EJS
+//     })
+//     .catch((err) =>{
+//         console.log(err);
+//     });
+// });
+// app.post('/blogs', (req, res) => {
+//     // console.log(req.body); Log the request body to the console
+//     const blog = new Blog(req.body); // Create a new blog instance with the request body
+//     blog.save()
+//     .then((result) => {
+//         res.redirect('/blogs'); // Redirect to the blogs page after saving
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     });
+// });
+// app.get('/blogs/:id', (req, res) => {
+//     const id = req.params.id; // Get the blog ID from the URL parameters
+//     Blog.findById(id) // Find the blog by ID
+//     .then((result) => {
+//         // res.send(result);  
+//         res.render('details', {blog: result , title:"Blog Details"});  // for EJS
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//         res.status(404).render('404', {title:"Blog not found"});  // for EJS
+//     });
+// });
+// // Delete Request
+// app.delete('/blogs/:id', (req, res) => {
+//     const id = req.params.id; // Get the blog ID from the URL parameters
+//     Blog.findByIdAndDelete(id) // Find the blog by ID and delete it
+//     .then((result) => {
+//         res.json({ redirect: '/blogs' }); // Send a JSON response to redirect after deletion
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     });
+// });
+// app.get('/blogs/create',(req, res) =>{
+//     res.render('create', {title:"Create a new blog"});   // for EJS
+// })
+// app.get('/contact', (req, res) => {
 // res.send('<p>Contact Page</p>');
 // res.sendFile('/views/contact.html', { root: __dirname });
 // });

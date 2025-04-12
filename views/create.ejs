@@ -2,18 +2,17 @@
 <%- include('./partials/head.ejs') %>
 <body>
     <%- include('./partials/nav.ejs') %>
-    <form action="/blogs" method="post">
-        <div>
-        <label for="title">Blog title:</label>
-        <input type="text" id="title" required name="title">
-    
-        <label for="snippet">Blog Snippet:</label>
-        <input type="text" id="snippet" required name="snippet">
-        <label for="body">Blog body:</label>
-        <textarea id="body" required name="body"></textarea>
-        <button>Submit</button>
+    <div class="create-blog content">
+        <form action="/blogs" method="POST">
+          <label for="title">Blog title:</label>
+          <input type="text" id="title" name="title" required>
+          <label for="snippet">Blog snippet:</label>
+          <input type="text" id="snippet" name="snippet" required>
+          <label for="body">Blog body:</label>
+          <textarea id="body" name="body" required></textarea>
+          <button>Submit</button>
         </form>
-    </div>
+      </div>
     
 </body>
 <%- include('./partials/footer.ejs') %>
